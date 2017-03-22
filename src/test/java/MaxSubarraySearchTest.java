@@ -8,12 +8,7 @@ import static org.junit.Assert.*;
 public class MaxSubarraySearchTest {
     @Test
     public void findMaxSubIndexes() throws Exception {
-        int arr[] = new int[5];
-        arr[0] = 5;
-        arr[1] = -1;
-        arr[2] = 4;
-        arr[3] = 2;
-        arr[4] = -3;
+        int arr[] = new int[] { 5, -1, 4, 2, -3 };
 
         int expIndexes[] = new int[2];
         expIndexes[0] = 0;
@@ -24,20 +19,10 @@ public class MaxSubarraySearchTest {
 
     @Test
     public void getDelta() throws Exception {
-        int arr[] = new int[5];
-        arr[0] = 5;
-        arr[1] = -1;
-        arr[2] = 4;
-        arr[3] = 2;
-        arr[4] = -3;
+        int arr[] = new int[] { 5, -1, 4, 2, -3 };
 
-        int delta[] = new int[4];
-        delta[0] = -6;
-        delta[1] = 5;
-        delta[2] = -2;
-        delta[3] = -5;
+        int delta[] = new int[] { -6, 5, -2, -5 };
 
         assertArrayEquals(delta, MaxSubarraySearch.getDelta(arr));
     }
-
 }
