@@ -17,9 +17,9 @@ public class GraphSearchTest {
         graph[1][2] = 1;
         graph[2][1] = 1;
 
-        int marks[] = new int[] {1, 0, 0};
+        int marked = 0;
 
-        assertEquals(0, GraphSearch.bfs(graph, marks, (int) (Math.random() * 3)));
+        assertEquals(2, GraphSearch.bfs(graph, marked, 2));
 
     }
 

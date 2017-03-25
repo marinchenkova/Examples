@@ -3,40 +3,54 @@ Enter amount of vertexes: 5
 
 Graph:
 0 1 1 0 1 
-1 0 1 1 0 
+1 0 1 1 1 
 1 1 0 0 1 
 0 1 0 0 0 
-1 0 1 0 0 
+1 1 1 0 0 
 
-Marked vertex: 0 0 1 0 0 
+Marked vertex: 5
 
 BFS:
-Starts from 1 : 3
-Starts from 2 : 3
-Starts from 3 : 3
-Starts from 4 : 3
-Starts from 5 : 3
+Starts from 1 : distance = 1
+Starts from 2 : distance = 1
+Starts from 3 : distance = 1
+Starts from 4 : distance = 2
+Starts from 5 : distance = 0
 
 ---------------------------
-Enter amount of vertexes: 3
+Enter amount of vertexes: 5
+
+Graph:
+0 0 1 1 1 
+0 0 0 0 0 
+1 0 0 0 1 
+1 0 0 0 1 
+1 0 1 1 0 
 Graph is not connected
 
-Graph:
-0 1 0 
-1 0 0 
-0 0 0 
-
 ---------------------------
-Enter amount of vertexes: 3
+Enter amount of vertexes: 9
 
 Graph:
-0 0 1 
-0 0 1 
-1 1 0 
+0 1 1 1 0 0 0 0 0 
+1 0 0 1 1 0 1 1 1 
+1 0 0 0 0 0 0 1 1 
+1 1 0 0 1 1 0 0 0 
+0 1 0 1 0 1 1 1 1 
+0 0 0 1 1 0 1 1 1 
+0 1 0 0 1 1 0 1 0 
+0 1 1 0 1 1 1 0 0 
+0 1 1 0 1 1 0 0 0 
 
-Marked vertex: 1 0 0 
+Marked vertex: 4
 
 BFS:
-Starts from 1 : 1
-Starts from 2 : 1
-Starts from 3 : 1 
+Starts from 1 : distance = 1
+Starts from 2 : distance = 1
+Starts from 3 : distance = 2
+Starts from 4 : distance = 0
+Starts from 5 : distance = 1
+Starts from 6 : distance = 1
+Starts from 7 : distance = 2
+Starts from 8 : distance = 2
+Starts from 9 : distance = 2

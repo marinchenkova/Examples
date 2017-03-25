@@ -20,22 +20,23 @@ public class GraphSearch {
 
             //Проверка связности графа
             try {
-                int test[] = new int[size];
-                for(int i = 0; i < size; i++)
-                    test[i] = 0;
-                test[0] = 1;
-                for(int i = 0; i < size; i++)
-                    bfs(graph, test, i);
-            } catch (NullPointerException e) {
-                System.err.println("Graph is not connected");
-                System.exit(0);
+                int test = (int) (Math.random() * size);
+                for(int i = 0; i < size; i++) {
+                    if (bfs(graph, test, i) == -1) {
+                        System.out.println("Graph is not connected");
+                        System.exit(0);
+                        break;
+                    }
+                }
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
             }
 
             //Пусть нужно найти вершину графа, которая содержит маркер.
             //Случайно выберем такую вершину
-            int marks[] = randMarkedVertex(size);
-            System.out.print("\nMarked vertex: ");
-            printArray(marks);
+            int marked = (int) (Math.random() * size);
+            System.out.println("\nMarked vertex: " + (marked + 1));
+
 
             //Найдем помеченную вершину с помощью поиска в ширину BFS
             System.out.println("\nBFS:");
@@ -43,10 +44,10 @@ public class GraphSearch {
                 int h;
                 for (int i = 0; i < size; i++) {
                     h = i + 1;
-                    System.out.print("Starts from " + h + " : ");
-                    System.out.println(bfs(graph, marks, i) + 1);
+                    System.out.print("Starts from " + h + " : distance = ");
+                    System.out.println(bfs(graph, marked, i));
                 }
-            } catch (NullPointerException e) {
+            } catch (IllegalArgumentException e) {
                 e.printStackTrace();
             }
         }
@@ -55,48 +56,46 @@ public class GraphSearch {
     /**
      * Поиск в ширину по графу.
      * @param graph граф
-     * @param marks массив с выделенным элементом, номер которого соответствует помеченной вершине
+     * @param marked помеченная вершина
      * @param start вершина начала поиска
-     * @return номер помеченной вершины
-     * @throws Exception если выбранная вершина начала поиска не соответствует размеру графа
+     * @return расстояние до помеченной вершины. -1 если путь до помеченной вершины не найден
+     * @throws IllegalArgumentException если вершина начала поиска не соответствует размеру графа
      */
-    public static int bfs(int graph[][], int[] marks, int start) throws Exception {
+    public static int bfs(int graph[][], int marked, int start) throws IllegalArgumentException {
         int size = graph.length;
         int group[][] = new int[size + 1][size + 1];
-        Integer res = null;
+        int path = 0;
         if(start > size - 1)
-            throw new Exception("Graph contains only " + size + " vertexes");
+            throw new IllegalArgumentException("Graph contains only " + size + " vertexes");
 
         for(int i = 0; i < size; i++)
             for(int j = 0; j < size; j++)
                 group[i][j] = 0;
 
         group[0][start] = 1;
-        all: for(int g = 0; g < size; g++) {
-
+        for(int g = 0; g < size; g++) {
             //Рассматриваем вершины из текущей группы
             for (int i = 0; i < size; i++) {
                 if (group[g][i] == 1) {
                     //Если вершина помечена, то завершаем поиск
-                    if (marks[i] == 1) {
-                        res = i;
-                        break all;
+                    if (i == marked) return path;
 
-                    } else
-                        //Помещение смежных вершин в следующую группу
-                        for (int j = 0; j < size; j++)
+                    //Помещение смежных вершин в следующую группу
+                    else for (int j = 0; j < size; j++)
                             if ((graph[i][j] == 1) && (j != i)) group[g + 1][j] = 1;
                 }
             }
+
+            path++;
         }
 
-        return res;
+        return -1;
     }
 
     /**
-     * Генерация графа.
+     * Генерация графа в виде матрицы смежности.
      * @param size количество вершин
-     * @return случайный граф
+     * @return матрица смежности графа
      */
     private static int[][] randGraph(int size) {
         int graph[][] = new int[size][size];
@@ -121,39 +120,14 @@ public class GraphSearch {
     }
 
     /**
-     * Помещение маркера в одну случайную вершину.
-     * @param size количество вершин
-     * @return массив boolean с одним помеченным элементом
-     */
-    private static int[] randMarkedVertex(int size){
-        int marks[] = new int[size];
-        int marked = (int) (Math.random() * size);
-
-        for(int i = 0; i < size; i++)
-            marks[i] = 0;
-        marks[marked] = 1;
-
-        return marks;
-    }
-
-    /**
      * Печать графа в виде матрицы смежности.
      * @param graph граф
      */
     private static void printGraph(int[][] graph){
-        for(int i = 0; i < graph.length; i++){
-            for(int j = 0; j < graph.length; j++)
-                System.out.print(graph[i][j] + " ");
+        for (int[] g : graph) {
+            for (int j = 0; j < graph.length; j++)
+                System.out.print(g[j] + " ");
             System.out.println();
         }
-    }
-
-    /**
-     * Печать массива в строку.
-     * @param arr массив
-     */
-    private static void printArray(int[] arr){
-        for(int i : arr) System.out.print(i + " ");
-        System.out.println();
     }
 }
