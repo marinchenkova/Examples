@@ -5,13 +5,13 @@ import java.util.Scanner;
  */
 public class GraphSearch {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IllegalArgumentException {
         Scanner scan = new Scanner(System.in);
 
         //Задание размера случайного графа
         System.out.print("Enter amount of vertexes: ");
         int size = scan.nextInt();
-        if(size == 0) throw new Exception("0 can't be size of graph");
+        if(size == 0) throw new IllegalArgumentException("0 can't be size of graph");
         else {
             //Отображение графа в виде матрицы смежности
             int graph[][] = randGraph(size);
