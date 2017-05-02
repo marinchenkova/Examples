@@ -24,10 +24,24 @@ public class BinaryTreeTest {
         assertTrue(tree.contains(3));
         assertTrue(tree.remove(3));
 
-        // Проверка корректного удаления вершины
+        // Удаление корня дерева
+        assertTrue(tree.contains(10));
+        assertTrue(tree.remove(10));
+
+        // Проверка корректного удаления вершин
         assertFalse(tree.contains(3));
+        assertFalse(tree.contains(10));
 
         assertTrue(tree.contains(1));
         assertTrue(tree.contains(4));
+
+        BinaryTree<Integer> tree1 = new BinaryTree<>();
+        tree1.add(10);
+
+        // Удаление единственной вершины дерева
+        assertTrue(tree1.contains(10));
+        assertTrue(tree1.remove(10));
+        assertFalse(tree1.contains(10));
+
     }
 }

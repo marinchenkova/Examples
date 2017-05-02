@@ -71,9 +71,12 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> {
             Node<T> right = removing.right;
 
             // Устранение удаляемой вершины из потомков родителя
-            assert parent != null;
-            if(parent.left != null && parent.left.equals(removing)) parent.left = null;
-            else parent.right = null;
+            if(parent != null) {
+                if(parent.left != null && parent.left.equals(removing)) parent.left = null;
+                else parent.right = null;
+            } else {
+                root = null;
+            }
 
             // Добавление всех вершин, которые являются потомками удаляемой вершины
             if(left != null) addTree(left);
