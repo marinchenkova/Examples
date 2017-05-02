@@ -56,6 +56,5 @@ public class BinaryTreeTest {
         assertFalse(tree1.contains(10));
 
         assertTrue(tree1.size() == 0);
-
     }
 }

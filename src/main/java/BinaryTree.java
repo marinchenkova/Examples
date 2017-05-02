@@ -70,17 +70,45 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> {
             Node<T> left = removing.left;
             Node<T> right = removing.right;
 
-            // Устранение удаляемой вершины из потомков родителя
-            if(parent != null) {
-                if(parent.left != null && parent.left.equals(removing)) parent.left = null;
-                else parent.right = null;
+            Boolean hasParent = parent != null;
+            Boolean leftChild = false;
+            if (hasParent && parent.left != null) leftChild = parent.left.equals(removing);
+
+            if (left != null && right != null) {
+                // Удаляемая вершина имеет две дочерние вершины
+                Node<T> min = findMin(removing.right);
+                remove(min.value);
+
+                min.left = removing.left;
+                min.right = removing.right;
+
+                if(hasParent) {
+                    if(leftChild) parent.left = min;
+                    else parent.right = min;
+                } else root = min;
+
+            } else if (left != null) {
+                // Удаляемая вершина имеет только левую дочернюю вершину
+                if (hasParent) {
+                    if(leftChild) parent.left = left;
+                    else parent.right = left;
+                } else root = left;
+
+            } else if (right != null){
+                // Удаляемая вершина имеет только правую дочернюю вершину
+                if (hasParent) {
+                    if(leftChild) parent.left = right;
+                    else parent.right = right;
+                } else root = right;
+
             } else {
-                root = null;
+                // Удаляемая вершина не имеет дочерних вершин
+                if (hasParent) {
+                    if(leftChild) parent.left = null;
+                    else parent.right = null;
+                } else root = null;
             }
 
-            // Добавление всех вершин, которые являются потомками удаляемой вершины
-            if(left != null) addTree(left);
-            if(right != null) addTree(right);
 
             size = newSize;
             return true;
@@ -115,6 +143,11 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> {
         add(extraRoot.value);
         if(extraRoot.left != null) addTree(extraRoot.left);
         if(extraRoot.right != null) addTree(extraRoot.right);
+    }
+
+
+    private Node<T> findMin(Node<T> start) {
+        return start.left == null ? start : findMin(start.left);
     }
 
     @Override
