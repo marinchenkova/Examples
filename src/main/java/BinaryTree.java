@@ -11,7 +11,6 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> {
     private Node<T> root = null;
     private int size = 0;
 
-
     private static class Node<T> {
         final T value;
         Node<T> left = null;
@@ -60,12 +59,13 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> {
 
     @Override
     public boolean remove(Object o) {
-        if(contains(o)) {
-            @SuppressWarnings("unchecked")
-            T t = (T) o;
-            Node<T> removing = find(t);
+        @SuppressWarnings("unchecked")
+        T t = (T) o;
+        Node<T> removing = find(t);
 
-            assert removing != null;
+        if(removing != null && t.compareTo(removing.value) == 0) {
+            int newSize = size - 1;
+
             Node<T> parent = findParent(removing, root);
             Node<T> left = removing.left;
             Node<T> right = removing.right;
@@ -82,6 +82,7 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> {
             if(left != null) addTree(left);
             if(right != null) addTree(right);
 
+            size = newSize;
             return true;
         }
         else return false;
